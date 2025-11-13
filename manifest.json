@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "网页调试信息提取器",
+  "version": "1.0.0",
+  "description": "一键提取网页调试信息，为AI生成友好的上下文 | Vibe Coding",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "downloads"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

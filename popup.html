@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网页调试信息提取器</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      width: 400px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 0;
+    }
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      text-align: center;
+      border-bottom: 3px solid #667eea;
+    }
+    .header h1 {
+      font-size: 18px;
+      color: #667eea;
+      margin-bottom: 5px;
+    }
+    .header p {
+      font-size: 12px;
+      color: #6b7280;
+    }
+    .content {
+      background: white;
+      padding: 20px;
+    }
+    .btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    .btn:active {
+      transform: translateY(0);
+    }
+    .btn-secondary {
+      background: #6b7280;
+    }
+    .btn-secondary:hover {
+      background: #4b5563;
+    }
+    #status {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      text-align: center;
+      display: none;
+    }
+    .success {
+      background: #d1f2eb;
+      color: #0c5d3d;
+      border: 2px solid #10b981;
+    }
+    .error {
+      background: #fee;
+      color: #c00;
+      border: 2px solid #f00;
+    }
+    .info {
+      background: #e3f2fd;
+      color: #1565c0;
+      border: 2px solid #2196f3;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      margin-bottom: 15px;
+    }
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 15px;
+    }
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+      display: none;
+    }
+    .stat-card {
+      background: #f8f9fa;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid #e9ecef;
+    }
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #667eea;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🔍 调试信息提取器</h1>
+    <p>Vibe Coding | Context Engineering</p>
+  </div>
+  
+  <div class="content">
+    <div class="info">
+      💡 <strong>使用说明</strong><br>
+      点击"提取当前页面"，信息会自动复制到剪贴板
+    </div>
+
+    <button class="btn" id="extractBtn">
+      <span id="btnText">📊 提取当前页面信息</span>
+    </button>
+
+    <button class="btn btn-secondary" id="viewBtn" style="display: none;">
+      👀 查看完整报告
+    </button>
+
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <div style="color: #667eea; font-size: 13px;">正在提取信息...</div>
+    </div>
+
+    <div id="status"></div>
+
+    <div class="stats" id="stats">
+      <div class="stat-card">
+        <div class="stat-value" id="elementCount">0</div>
+        <div class="stat-label">HTML元素</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="styleCount">0</div>
+        <div class="stat-label">样式表</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="scriptCount">0</div>
+        <div class="stat-label">脚本文件</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="issueCount">0</div>
+        <div class="stat-label">待优化项</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
